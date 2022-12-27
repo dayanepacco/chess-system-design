@@ -18,7 +18,7 @@ public class Program {
 		while (true) {
 			try {
 				UI.clearScreen();
-				UI.printBoard(chessMatch.getPieces());       //vai receber a matriz de peças da partida
+				UI.printMatch(chessMatch);       //vai receber a matriz de peças da partida
 		        System.out.println();
 		        System.out.println("Source: ");
 		        ChessPosition source = UI.readChessPosition(sc);
