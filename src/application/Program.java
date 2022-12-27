@@ -18,7 +18,7 @@ public class Program {
 		ChessMatch chessMatch = new ChessMatch();     //impirmir tabuleiro
 		List<ChessPiece> captured = new ArrayList<>();
 		
-		while (true) {
+		while (!chessMatch.getCheckMate()) {         //enquanto a partida não estiver em checkMate
 			try {
 				UI.clearScreen();
 				UI.printMatch(chessMatch, captured);       //vai receber a matriz de peças da partida
@@ -47,10 +47,11 @@ public class Program {
 			catch(InputMismatchException  e) {
 				System.out.println(e.getMessage());
 				sc.nextLine();
-			}
-	
-        
+			}    
 		}
+		UI.clearScreen();            //deu checkMate limpa a tela
+		UI.printMatch(chessMatch, captured);            //imprimir a partida novamente finalizada
+		
 	}
 
 }
