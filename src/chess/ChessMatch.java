@@ -1,5 +1,8 @@
 package chess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
@@ -11,6 +14,9 @@ public class ChessMatch {
 	private int turn;
 	private Color currentPlayer;
 	private Board board;
+	
+	private List<Piece> piecesOnTheBoard = new ArrayList<>();
+	private List<Piece> capturedPieces = new ArrayList<>();
 	
 	public ChessMatch() {                //dimensão de um tabuleiro
 		board = new Board(8, 8);
@@ -54,9 +60,14 @@ public class ChessMatch {
 	}
 	
 	private Piece makeMove(Position source, Position target) {
-		Piece p = board.piece(source);
-		Piece capturedPiece = board.removePiece(target);
-		board.placePiece(p,  target);
+		Piece p = board.removePiece(source);                  //tiro a peça do tabuleiro
+		Piece capturedPiece = board.removePiece(target);      //tiro possível peça capturada
+		board.placePiece(p,  target);                        //coloco na posição de destino a peça que estava na posição de origem
+		
+		if (capturedPiece != null) {             //testar se a peça capturada for diferente de null remover 
+			piecesOnTheBoard.remove(capturedPiece);
+			capturedPieces.add(capturedPiece);      //add na lista de peças capturadas
+		}
 		return capturedPiece;
 	}
 	
@@ -84,6 +95,7 @@ public class ChessMatch {
 	}
 	private void placeNewPiece(char column, int row, ChessPiece piece) {
 		board.placePiece(piece, new ChessPosition(column, row).toPosition());
+		piecesOnTheBoard.add(piece);
 	}
 	
 	private void initialSetup() {                //iniciar a partida de xadrez colocando as peças no tabuleiro
